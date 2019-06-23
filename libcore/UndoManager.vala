@@ -540,7 +540,7 @@ public class Marlin.UndoManager : GLib.Object {
 
     public void undo (Gtk.Widget widget, UndoFinishCallback? cb) {
         mutex.lock ();
-        weak Marlin.UndoManagerData? action = stack_scroll_right ();
+        unowned Marlin.UndoManagerData? action = stack_scroll_right ();
         if (action != null) {
             action.locked = true;
         }
@@ -829,10 +829,6 @@ public class Marlin.UndoManager : GLib.Object {
         return (get_next_undo_action () != null);
     }
 
-    private bool can_redo () {
-        return (get_next_redo_action () != null);
-    }
-
     private unowned Marlin.UndoManagerData? stack_scroll_right () {
         if (!can_undo ())
             return null;
@@ -845,15 +841,7 @@ public class Marlin.UndoManager : GLib.Object {
         return data;
     }
 
-    private unowned Marlin.UndoManagerData? stack_scroll_left () {
-        if (!can_redo ())
-            return null;
-
-        index--;
-        return stack.peek_nth (index);
-    }
-
-    private void undo_redo_done_transfer_callback (owned Marlin.UndoManagerData action) {
+    private void undo_redo_done_transfer_callback (Marlin.UndoManagerData action) {
         /* If the action needed to be freed but was locked, free now */
         if (!action.freed) {
             action.locked = false;
@@ -877,15 +865,6 @@ public class Marlin.UndoManager : GLib.Object {
     private static GLib.List<GLib.File> gfile_list_from_uri (string uri) {
         var list = new GLib.List<GLib.File> ();
         list.append (GLib.File.new_for_uri (uri));
-        return list;
-    }
-
-    private static GLib.List<GLib.File> gfile_list_from_uri_list (GLib.List<string> uri_list) {
-        var list = new GLib.List<GLib.File> ();
-        foreach (unowned string uri in uri_list) {
-            list.append (GLib.File.new_for_uri (uri));
-        }
-
         return list;
     }
 
