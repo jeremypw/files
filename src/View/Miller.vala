@@ -295,7 +295,7 @@ namespace Marlin.View {
             if (increment != 0.0) {
                 hadj.set_value (hadj.get_value () + increment);
             }
-            return true;
+            return false;
         }
 
         private void on_slot_path_changed () {
