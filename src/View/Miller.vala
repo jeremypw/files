@@ -247,7 +247,6 @@ namespace Marlin.View {
         private void connect_slot_signals (Slot slot) {
             slot.frozen_changed.connect (on_slot_frozen_changed);
             slot.active.connect (on_slot_active);
-            slot.horizontal_scroll_event.connect (on_slot_horizontal_scroll_event);
             slot.miller_slot_request.connect (on_miller_slot_request);
             slot.new_container_request.connect (on_new_container_request);
             slot.size_change.connect (update_total_width);
@@ -261,7 +260,6 @@ namespace Marlin.View {
         private void disconnect_slot_signals (Slot slot) {
             slot.frozen_changed.disconnect (on_slot_frozen_changed);
             slot.active.disconnect (on_slot_active);
-            slot.horizontal_scroll_event.disconnect (on_slot_horizontal_scroll_event);
             slot.miller_slot_request.disconnect (on_miller_slot_request);
             slot.new_container_request.disconnect (on_new_container_request);
             slot.size_change.disconnect (update_total_width);
